@@ -1,4 +1,4 @@
-// First stupid version
+// Simple version
 const fs = require('fs')
 
 let numZero = 0
@@ -9,8 +9,7 @@ input.split(/\n/).forEach(line =>  {
   if (line) {
     const num = parseInt(line.substr(1), 10)
     const s = line.charAt(0) === 'L' ? -num : +num
-    current = (current + s) % 100
-    if (current < 0) current += 100
+    current = (((current + s) % 100) + 100) % 100
     if (current === 0) numZero++
   }
 })
