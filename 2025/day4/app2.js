@@ -1,4 +1,4 @@
-// Simple version
+// Better version
 console.time()
 const fs = require('fs')
 
@@ -9,7 +9,6 @@ const grid = input.trim().split(/\n/).map(line => line.split(''))
 
 const removeRolls = () => {
   let numRemoved = 0
-  const removed = []
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
       if (grid[y][x] === '@') {
@@ -23,12 +22,14 @@ const removeRolls = () => {
           }
           if (count >= 4) break
         }
-        if (count < 4) removed.push({ x, y })
+        if (count < 4) {
+          grid[y][x] = '.'
+          numRemoved++
+        }
       }
     }
   }
-  removed.forEach(roll => grid[roll.y][roll.x] = '.')
-  return removed.length
+  return numRemoved
 }
 
 while (numRemoved = removeRolls()) {
