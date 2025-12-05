@@ -2,7 +2,7 @@
 console.time()
 const fs = require('fs')
 
-const input = fs.readFileSync('input-test', 'utf-8')
+const input = fs.readFileSync('input', 'utf-8')
 let answer = 0
 
 const [ranges, ingredients] = 
@@ -15,14 +15,14 @@ const [ranges, ingredients] =
       : part.split('\n').map(v => parseInt(v,  10))
   })
 
-console.log(ranges)
-console.log(ingredients)
-
-// ingredients.forEach(id => {
-//   for (let i = 0; i < ranges.length; i++) {
-//     if (id >= ranges[i][0] && id <= ranges[i][1]) answer++
-//   }
-// })
+ingredients.forEach(id => {
+  for (let i = 0; i < ranges.length; i++) {
+    if (id >= ranges[i][0] && id <= ranges[i][1]) {
+      answer++
+      break
+    }
+  }
+})
 
 console.log('Answer:', answer)
 console.timeEnd()
