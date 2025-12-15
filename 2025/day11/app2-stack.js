@@ -17,19 +17,18 @@ const count = (key) => {
 
   while (stack.length > 0) {
     const current = stack.pop()
-    console.log(current)
+    // console.log(current)
     if (current === 'out') {
-      let target = current
-      let p = []
-      while (target !== undefined) {
-        p.push(target)
-        target = path.get(target)
-      }
-      console.log('------')
-      console.log(path)
-      console.log(p.reverse().join(','))
-      console.log('------')
-      return 1
+      // let target = current
+      // let p = []
+      // while (target !== undefined) {
+      //   p.push(target)
+      //   target = path.get(target)
+      // }
+      // console.log('------')
+      // console.log(path)
+      // console.log(p.reverse().join(','))
+      // console.log('------')
       result++
       // if (p.includes('dac') && p.includes('fft')) result++
     }
