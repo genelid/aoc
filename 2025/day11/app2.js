@@ -2,7 +2,7 @@
 console.time()
 const fs = require('fs')
 
-const input = fs.readFileSync('input-test', 'utf-8')
+const input = fs.readFileSync('input', 'utf-8')
 
 const devices = new Map(input.trim().split(/\n/)
   .map(line => {
@@ -10,44 +10,20 @@ const devices = new Map(input.trim().split(/\n/)
     return [d[0], d.slice(1)]
   }))
 
-/*
- * Idea: the input somehow to remove data
- */
-
-
-const count = (key) => {
-  let result = 0
-  const path = new Map()
-  const stack = [key]
-
-  while (stack.length > 0) {
-    const current = stack.pop()
-    // console.log(current)
-    if (current === 'out') {
-      let target = current
-      let p = []
-      while (target !== undefined) {
-        p.push(target)
-        target = path.get(target)
-      }
-      console.log('------')
-      console.log(path)
-      console.log(p.reverse().join(','))
-      console.log('------')
-      if (p.includes('dac') && p.includes('fft')) result++
-    }
-    else {
-      devices.get(current).forEach(item => {
-        stack.push(item)
-        path.set(item, current)
-      })
-    }
-  }
-
-  return result
+const count = (src, dst, memo = new Map()) => {
+  if (src === dst) return 1
+  if (memo.has(src)) return memo.get(src)
+  if (!devices.has(src)) return 0
+  const value = devices.get(src).reduce((a, cv) => a + count(cv, dst, memo), 0)
+  memo.set(src, value)
+  return value
 }
 
-let answer = count('svr')
+let answer = [
+  { src: 'svr', dst: 'fft' },
+  { src: 'fft', dst: 'dac' },
+  { src: 'dac', dst: 'out' },
+].reduce((a, cv) => a * count(cv.src, cv.dst),  1)
 
 console.log('Answer:', answer)
 console.timeEnd()
