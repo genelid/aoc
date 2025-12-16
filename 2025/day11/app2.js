@@ -2,13 +2,18 @@
 console.time()
 const fs = require('fs')
 
-const input = fs.readFileSync('input', 'utf-8')
+const input = fs.readFileSync('input-test', 'utf-8')
 
 const devices = new Map(input.trim().split(/\n/)
   .map(line => {
     const d = line.split(/:?[ ]/)
     return [d[0], d.slice(1)]
   }))
+
+/*
+ * Idea: the input somehow to remove data
+ */
+
 
 const count = (key) => {
   let result = 0
@@ -17,7 +22,7 @@ const count = (key) => {
 
   while (stack.length > 0) {
     const current = stack.pop()
-    console.log(current)
+    // console.log(current)
     if (current === 'out') {
       let target = current
       let p = []
@@ -29,14 +34,12 @@ const count = (key) => {
       console.log(path)
       console.log(p.reverse().join(','))
       console.log('------')
-      return 1
-      result++
-      // if (p.includes('dac') && p.includes('fft')) result++
+      if (p.includes('dac') && p.includes('fft')) result++
     }
     else {
       devices.get(current).forEach(item => {
         stack.push(item)
-        // path.set(item, current)
+        path.set(item, current)
       })
     }
   }
